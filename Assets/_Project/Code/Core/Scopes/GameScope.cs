@@ -9,14 +9,17 @@ namespace Project.Code.Core
     {
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.RegisterEntryPoint<EcsLoop>()
+                .As<IEcsLoop>();
+            
             builder.Register<InputSystem>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
 
             builder.Register<MoveSystem>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
-
-            builder.RegisterEntryPoint<EcsLoop>()
-                .As<IEcsLoop>();
+            
+            builder.Register<RotationSystem>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
         }
     }
 }

@@ -7,21 +7,48 @@ namespace Project.Providers
 {
     public class PlayerProvider : EntityProvider
     {
-        [SerializeField] private float _speed = 5f;
         [SerializeField] private CharacterController _characterController;
+        [SerializeField] private Transform _transform;
+        
+        [SerializeField] private float _moveSpeed = 5f;
+        [SerializeField] private float _rotationSpeed = 5f;
 
         protected override void Initialize()
         {
-            Debug.Log("PlayerProvider Initialize called");
-            var stash = World.Default.GetStash<MoveComponent>();
-            ref var move = ref  stash.Add(Entity);
-            move.Speed = _speed;
+            Move();
+            Rotate();
+            Input();
+            CharacterController();
+        }
+
+        private void Move()
+        {
+            World.Default.GetStash<MoveComponent>()
+                .Add(Entity)
+                .Speed = _moveSpeed;
+        }
+
+        private void Rotate()
+        {
+            ref var  rotationComponent = ref World.Default
+                .GetStash<RotationComponent>()
+                .Add(Entity);
             
-            World.Default.GetStash<InputComponent>().Add(Entity);
-            
-            var ccStash = World.Default.GetStash<CharacterControllerComponent>();
-            ref var cc = ref ccStash.Add(Entity);
-            cc.value = _characterController;
+            rotationComponent.Speed = _rotationSpeed;
+            rotationComponent.Transform = _transform;
+        }
+
+        private void Input()
+        {
+            World.Default.GetStash<InputComponent>()
+                .Add(Entity);
+        }
+
+        private void CharacterController()
+        {
+           World.Default.GetStash<CharacterControllerComponent>()
+               .Add(Entity)
+               .value = _characterController;
         }
     }
 }
