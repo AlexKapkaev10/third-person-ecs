@@ -1,9 +1,9 @@
-using Project.Gameplay.Services;
+using Project.Code.Gameplay.Services;
 using Scellecs.Morpeh;
 using VContainer;
 using VContainer.Unity;
 
-namespace Project.Code.Core
+namespace Project.Code.Core.Scopes
 {
     public class ProjectScope : LifetimeScope
     {

@@ -1,9 +1,9 @@
-using Project.Components;
+using Project.Code.Gameplay.Components;
 using Scellecs.Morpeh;
 using Scellecs.Morpeh.Providers;
 using UnityEngine;
 
-namespace Project.Providers
+namespace Project.Code.Gameplay.Providers
 {
     public class PlayerProvider : EntityProvider
     {
@@ -19,6 +19,7 @@ namespace Project.Providers
             Rotate();
             Input();
             CharacterController();
+            CameraTarget();
         }
 
         private void Move()
@@ -48,7 +49,13 @@ namespace Project.Providers
         {
            World.Default.GetStash<CharacterControllerComponent>()
                .Add(Entity)
-               .value = _characterController;
+               .Controller = _characterController;
+        }
+        
+        private void CameraTarget()
+        {
+            World.Default.GetStash<CameraTargetComponent>()
+                .Add(Entity);
         }
     }
 }

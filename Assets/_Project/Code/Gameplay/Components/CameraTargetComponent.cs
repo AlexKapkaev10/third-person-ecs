@@ -2,8 +2,8 @@ using Scellecs.Morpeh;
 
 namespace Project.Code.Gameplay.Components
 {
-    public struct MoveComponent : IComponent
+    public struct CameraTargetComponent : IComponent
     {
-        public float Speed;
+        
     }
 }

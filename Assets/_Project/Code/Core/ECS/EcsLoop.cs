@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Project.Systems;
 using Scellecs.Morpeh;
 using UnityEngine;
 using VContainer.Unity;
@@ -38,6 +37,11 @@ namespace Project.Code.Core.ECS
 
         public void Tick()
         {
+            if (_world.IsDisposed)
+            {
+                return;
+            }
+            
             _world.Update(Time.deltaTime);
             _world.CleanupUpdate(Time.deltaTime);
         }

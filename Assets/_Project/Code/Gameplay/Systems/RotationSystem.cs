@@ -1,8 +1,8 @@
-using Project.Components;
+using Project.Code.Gameplay.Components;
 using Scellecs.Morpeh;
 using UnityEngine;
 
-namespace Project.Systems
+namespace Project.Code.Gameplay.Systems
 {
     public class RotationSystem : ISystem
     {

@@ -1,7 +1,7 @@
 using Scellecs.Morpeh;
 using UnityEngine;
 
-namespace Project.Components
+namespace Project.Code.Gameplay.Components
 {
     public struct InputComponent : IComponent
     {

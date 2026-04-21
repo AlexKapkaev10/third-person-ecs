@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer.Unity;
 
-namespace Project.Gameplay.Services
+namespace Project.Code.Gameplay.Services
 {
     public interface IInputService : IInitializable, IDisposable
     {

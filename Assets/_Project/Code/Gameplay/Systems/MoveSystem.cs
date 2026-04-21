@@ -1,8 +1,8 @@
-using Project.Components;
+using Project.Code.Gameplay.Components;
 using Scellecs.Morpeh;
 using UnityEngine;
 
-namespace Project.Systems
+namespace Project.Code.Gameplay.Systems
 {
     public class MoveSystem : ISystem
     {
@@ -35,7 +35,7 @@ namespace Project.Systems
                 ref var character = ref _characterStash.Get(entity);
 
                 var direction = new Vector3(input.MoveDirection.x, 0, input.MoveDirection.y);
-                character.value.SimpleMove(direction * move.Speed);
+                character.Controller.SimpleMove(direction * move.Speed);
             }
         }
 

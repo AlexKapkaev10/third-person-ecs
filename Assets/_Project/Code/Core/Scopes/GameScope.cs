@@ -1,9 +1,9 @@
 using Project.Code.Core.ECS;
-using Project.Systems;
+using Project.Code.Gameplay.Systems;
 using VContainer;
 using VContainer.Unity;
 
-namespace Project.Code.Core
+namespace Project.Code.Core.Scopes
 {
     public class GameScope : LifetimeScope
     {
@@ -19,6 +19,9 @@ namespace Project.Code.Core
                 .AsImplementedInterfaces();
             
             builder.Register<RotationSystem>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
+            
+            builder.Register<CameraFollowSystem>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
         }
     }

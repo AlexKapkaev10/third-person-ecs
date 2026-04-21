@@ -1,8 +1,8 @@
-using Project.Components;
-using Project.Gameplay.Services;
+using Project.Code.Gameplay.Components;
+using Project.Code.Gameplay.Services;
 using Scellecs.Morpeh;
 
-namespace Project.Systems
+namespace Project.Code.Gameplay.Systems
 {
     public class InputSystem : ISystem
     {
