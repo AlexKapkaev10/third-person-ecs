@@ -9,7 +9,9 @@ namespace Project.Code.Gameplay.Providers
     {
         [SerializeField] private Camera _camera;
         [SerializeField] private Vector3 _offset = new(0f, 3f, -5f);
-        [SerializeField] private float _smoothTime = 0.15f;
+        [SerializeField] private float _pitch = 15f;
+        [SerializeField] private float _positionSmoothness = 10f;
+        [SerializeField] private float _rotationSmoothness = 8f;
 
         protected override void Initialize()
         {
@@ -19,7 +21,9 @@ namespace Project.Code.Gameplay.Providers
             
             cameraFollow.CameraTransform = _camera.transform;
             cameraFollow.Offset = _offset;
-            cameraFollow.SmoothTime = _smoothTime;
+            cameraFollow.Pitch = _pitch;
+            cameraFollow.PositionSmoothness = _positionSmoothness;
+            cameraFollow.RotationSmoothness = _rotationSmoothness;
         }
     }
 }

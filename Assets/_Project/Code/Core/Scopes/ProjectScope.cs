@@ -1,3 +1,4 @@
+using Project.Code.Core.Services;
 using Project.Code.Gameplay.Services;
 using Scellecs.Morpeh;
 using VContainer;
@@ -21,6 +22,9 @@ namespace Project.Code.Core.Scopes
             
             builder.RegisterEntryPoint<InputService>()
                 .As<IInputService>();
+            
+            builder.Register<AssetBundleService>(Lifetime.Singleton)
+                .As<IAssetBundleService>();
         }
     }
 }

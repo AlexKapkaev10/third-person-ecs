@@ -9,17 +9,34 @@ namespace Project.Code.Gameplay.Providers
     {
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private Transform _transform;
+        [SerializeField] private Animator _animator;
         
         [SerializeField] private float _moveSpeed = 5f;
         [SerializeField] private float _rotationSpeed = 5f;
 
         protected override void Initialize()
         {
+            Transform();
+            Animator();
             Move();
             Rotate();
             Input();
             CharacterController();
             CameraTarget();
+        }
+
+        private void Transform()
+        {
+            World.Default.GetStash<TransformComponent>()
+                .Add(Entity)
+                .Value = _transform;
+        }
+
+        private void Animator()
+        {
+            World.Default.GetStash<AnimatorComponent>()
+                .Add(Entity)
+                .Value = _animator;
         }
 
         private void Move()
@@ -31,12 +48,9 @@ namespace Project.Code.Gameplay.Providers
 
         private void Rotate()
         {
-            ref var  rotationComponent = ref World.Default
-                .GetStash<RotationComponent>()
-                .Add(Entity);
-            
-            rotationComponent.Speed = _rotationSpeed;
-            rotationComponent.Transform = _transform;
+            World.Default.GetStash<RotationComponent>()
+                .Add(Entity)
+                .Speed = _rotationSpeed;
         }
 
         private void Input()

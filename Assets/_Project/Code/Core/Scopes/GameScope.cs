@@ -21,6 +21,9 @@ namespace Project.Code.Core.Scopes
             builder.Register<RotationSystem>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
             
+            builder.Register<AnimationSystem>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
+            
             builder.Register<CameraFollowSystem>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
         }

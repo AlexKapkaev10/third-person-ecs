@@ -7,7 +7,8 @@ namespace Project.Code.Gameplay.Components
     { 
         public Transform CameraTransform;
         public Vector3 Offset;
-        public Vector3 Velocity;
-        public float SmoothTime;
+        public float Pitch;
+        public float PositionSmoothness;
+        public float RotationSmoothness;
     }
 }

@@ -11,21 +11,21 @@ namespace Project.Code.Gameplay.Systems
         private Filter _targetFilter;
         private Filter _cameraFilter;
 
-        private Stash<RotationComponent> _rotationStash;
+        private Stash<TransformComponent> _transformStash;
         private Stash<CameraFollowComponent> _cameraStash;
 
         public void OnAwake()
         {
             _targetFilter = World.Filter
                 .With<CameraTargetComponent>()
-                .With<RotationComponent>()
+                .With<TransformComponent>()
                 .Build();
 
             _cameraFilter = World.Filter
                 .With<CameraFollowComponent>()
                 .Build();
 
-            _rotationStash = World.GetStash<RotationComponent>();
+            _transformStash = World.GetStash<TransformComponent>();
             _cameraStash = World.GetStash<CameraFollowComponent>();
         }
 
@@ -35,25 +35,42 @@ namespace Project.Code.Gameplay.Systems
             if (World.IsDisposed(targetEntity))
             {
                 return;
-            }       
+            }
 
-            var targetTransform = _rotationStash.Get(targetEntity).Transform;
+            var targetTransform = _transformStash.Get(targetEntity).Value;
 
             foreach (var cameraEntity in _cameraFilter)
             {
                 ref var follow = ref _cameraStash.Get(cameraEntity);
 
                 var desiredPosition = targetTransform.position + follow.Offset;
-
-                follow.CameraTransform.position = Vector3.SmoothDamp(
+                var positionT = 1f - Mathf.Exp(-follow.PositionSmoothness * deltaTime);
+                follow.CameraTransform.position = Vector3.Lerp(
                     follow.CameraTransform.position,
                     desiredPosition,
-                    ref follow.Velocity,
-                    follow.SmoothTime);
+                    positionT);
 
-                follow.CameraTransform.LookAt(targetTransform);
+                var virtualCameraPosition = targetTransform.position 
+                    + new Vector3(0f, follow.Offset.y, follow.Offset.z);
+                var horizontal = targetTransform.position - virtualCameraPosition;
+                horizontal.y = 0f;
+
+                if (horizontal.sqrMagnitude < 0.0001f)
+                {
+                    continue;
+                }
+                
+                var yaw = Quaternion.LookRotation(horizontal).eulerAngles.y;
+                var desiredRotation = Quaternion.Euler(follow.Pitch, yaw, 0f);
+                var rotationT = 1f - Mathf.Exp(-follow.RotationSmoothness * deltaTime);
+                follow.CameraTransform.rotation = Quaternion.Slerp(
+                    follow.CameraTransform.rotation,
+                    desiredRotation,
+                    rotationT);
             }
+
         }
+
 
         public void Dispose()
         {
